@@ -1,8 +1,8 @@
 import {v} from "convex/values";
-import {definedSchema,definedTable, defineTable} from "convex/server";
+import {defineSchema, defineTable} from "convex/server";
 
 
-export default definedSchema({
+export default defineSchema({
     boards:defineTable({
         title:v.string(),
         orgId:v.string(),
