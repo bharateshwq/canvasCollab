@@ -1,5 +1,5 @@
 'use client';
-import { Link2, Trash2 } from 'lucide-react';
+import { Link2, Pencil, Trash2 } from 'lucide-react';
 import { DropdownMenuContentProps } from '@radix-ui/react-dropdown-menu';
 import {
   DropdownMenu,
@@ -13,6 +13,7 @@ import { useApiMutation } from '@/hooks/use-api-mutation';
 import { api } from '@/convex/_generated/api';
 import { ConfirmModal } from './confirm-model';
 import { Button } from './ui/button';
+import { useRenameModal } from '@/store/use-rename-modal';
 
 interface ActionsProps {
   children: React.ReactNode;
@@ -23,6 +24,7 @@ interface ActionsProps {
 }
 
 export const Actions = ({ children, side, sideOffSet, id, title }: ActionsProps) => {
+  const { onOpen } = useRenameModal();
   const { mutate, pending } = useApiMutation(api.board.remove);
   const onCopyLink = (e: any) => {
     navigator.clipboard
@@ -60,6 +62,14 @@ export const Actions = ({ children, side, sideOffSet, id, title }: ActionsProps)
         >
           <Link2 className="h-4 w-4 mr-2  " />
           Copy link to clipboard
+        </Button>
+        <Button
+          variant={'ghost'}
+          className="p-3 cursor-pointer flex flex-row text-base w-full justify-start font-normal"
+          onClick={() => onOpen(id, title)}
+        >
+          <Pencil className="h-4 w-4 mr-2  " />
+          Rename
         </Button>
         <ConfirmModal
           header="Delete vision?"
