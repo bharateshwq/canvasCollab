@@ -10,6 +10,12 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Actions } from '@/components/actions';
 import { MoreHorizontal } from 'lucide-react';
 import Overlay from './overlay';
+import { useApiMutation } from '@/hooks/use-api-mutation';
+import { favorite, unFavorite } from '../../../../convex/board';
+import { api } from '@/convex/_generated/api';
+import { toast } from 'sonner';
+import { useMutation } from 'convex/react';
+import { Id } from '@/convex/_generated/dataModel';
 
 interface BoardCardProps {
   id: string;
@@ -35,6 +41,18 @@ export const BoardCard = ({
   const { userId } = useAuth();
   const authorLabel = userId === authorId ? 'You' : authorName;
   const createdAtLabel = formatDistanceToNow(createdAt, { addSuffix: true });
+  const handleFavorite = useMutation(api.board.favorite);
+  const handleUnFavorite = useMutation(api.board.unFavorite);
+
+  const { mutate: onFavorite, pending: pendingFavorite } = useApiMutation(api.board.favorite);
+  const { mutate: onUnFavorite, pending: pendingUnfavorite } = useApiMutation(api.board.unFavorite);
+  const toggleFavorite = () => {
+    if (isFavorite) {
+      onUnFavorite({ id }).catch(() => toast.error('Failed to unfavorite'));
+    } else {
+      onFavorite({ id, orgId }).catch(() => toast.error('Failed to favorite'));
+    }
+  };
 
   return (
     <Link href={`/board/${id}`}>
@@ -53,8 +71,8 @@ export const BoardCard = ({
           title={title}
           authorLabel={authorLabel}
           createdAtLabel={createdAtLabel}
-          onClick={() => {}}
-          disabled={false}
+          onClick={toggleFavorite}
+          disabled={pendingFavorite || pendingUnfavorite}
         />
       </div>
     </Link>

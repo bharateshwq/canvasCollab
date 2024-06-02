@@ -26,7 +26,11 @@ const Footer = ({ title, authorLabel, createdAtLabel, isFavorite, onClick, disab
             disabled && 'cursor-not-allowed opacity-75'
           )}
           disabled={disabled}
-          onClick={onClick}
+          onClick={(e) => {
+            e.preventDefault();
+            // e.stopPropagation();
+            onClick();
+          }}
         >
           <Star className={cn('h-4 w-4', isFavorite && 'fill-blue-600 text-blue-600')} />
         </button>

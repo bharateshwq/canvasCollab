@@ -66,7 +66,9 @@ export const Actions = ({ children, side, sideOffSet, id, title }: ActionsProps)
         <Button
           variant={'ghost'}
           className="p-3 cursor-pointer flex flex-row text-base w-full justify-start font-normal"
-          onClick={() => onOpen(id, title)}
+          onClick={() => {
+            onOpen(id, title);
+          }}
         >
           <Pencil className="h-4 w-4 mr-2  " />
           Rename

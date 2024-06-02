@@ -10,7 +10,7 @@ interface itemProps {
 }
 
 import React from 'react';
-import Hint from '@/components/hint';
+import { Hint } from '@/components/hint';
 
 const Item = ({ id, name, imageUrl }: itemProps) => {
   const { organization } = useOrganization();

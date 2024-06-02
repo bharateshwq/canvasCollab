@@ -2,7 +2,7 @@
 import { Plus } from 'lucide-react';
 import { CreateOrganization } from '@clerk/clerk-react';
 import { Dialog, DialogContent, DialogTrigger } from '@radix-ui/react-dialog';
-import Hint from '@/components/hint';
+import { Hint } from '@/components/hint';
 const NewButton = () => {
   return (
     <Dialog>
